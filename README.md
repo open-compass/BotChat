@@ -22,7 +22,7 @@ Besides, note that you are chatting with human, so do not say too many words in 
 """
 ```
 
-. For each chatbot, we set the temperature to 0 (if applicable), and set the dialogue round to $$N$$ ($$N=16$$ in our experiments, including the first two chats) to generate conversations. When generating the next chat, the system prompt and all previous chats will be provided to the LLM as the prompt. We demonstrate the process using the following pseudo codes: 
+. For each chatbot, we set the temperature to 0 (if applicable), and set the dialogue round to $N$ ($N=16$ in our experiments, including the first two chats) to generate conversations. When generating the next chat, the system prompt and all previous chats will be provided to the LLM as the prompt. We demonstrate the process using the following pseudo codes: 
 
 ```python
 # Let's say we have a system prompt "SYS", 4 existing chats "[chat1, chat2, chat3, chat4]", 
@@ -65,15 +65,15 @@ print(chats) # Chats is a list of multiple strings, each string is a chat spoken
 
 #### Evaluation Prompt 
 
-We first use GPT-4 to evaluate each single generated conversation. The workflow is: 
+We first use GPT-4 to evaluate each generated conversation separately. The workflow is: 
 
 1. We first ask GPT-4 if it thinks that the provided conversation is participated by AI  (Yes / No).
 2. Based on the response of Step1:
-   1. Yes: We ask GPT-4 to provide the index of the first chat that it thinks spoken by AI. 
+   1. Yes: We ask GPT-4 to provide the index of the first chat that it thinks is spoken by AI. 
    2. No: Pass
 3. We ask GPT-4 to provide the reason for its judgement. 
 
-We pack the above workflow into the following evaluation prompt. Besides, we also prepared several [in-context examples](data/UniEval_examples.txt) that will be appended to the evaluation prompt, to strengthen the instruction following capability of GPT-4. 
+We pack the above workflow into the following evaluation prompt. Besides, we also prepared several [in-context examples](data/UniEval_examples.txt) that will be appended to the evaluation prompt, to strengthen the instruction following the capability of GPT-4. 
 
 ```python
 """
@@ -94,16 +94,16 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 #### Evaluation Result
 
-We evaluate all 5470 generated conversations with the above mentioned strategy, and present the evaluation result in this section. In the figure below, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $$N$$, with models sorted by the descending order of the success rate @ $$N=16$$.  Here we summarize our major findings:
+We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In the figure below, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$.  Here we summarize our major findings:
 
-1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves near 60% success rate in generating conversations long as $N=16$, while the second best model chatPJLM-123B achieves less than 40%. 
+1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves near 60% success rate in generating conversations as long as $N=16$, while the second-best model chatPJLM-123B achieves less than 40%. 
 2. 
 
 ![UniEval Result](/assets/UniEval_passrate.png)
 
 ### BotChat Arena
 
-### Compared to the "Ground-Truth"
+### Compared to the "Ground Truth"
 
 ### Qualitative Analysis
 
