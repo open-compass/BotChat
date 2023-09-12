@@ -1,6 +1,6 @@
 # BotChat Benchmark
 
-> **Can two ChatBot instances chat smoothly and fluently with each other? **
+**Can two ChatBot instances chat smoothly and fluently with each other? **
 
 ## Introduction
 
