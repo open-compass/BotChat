@@ -96,7 +96,7 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In the figure below, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$.  Here we summarize our major findings:
 
-1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves near 60% success rate in generating conversations as long as $N=16$, while the second-best model chatPJLM-123B achieves less than 40%. 
+1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves over 65% success rate in generating conversations as long as $N=16$, while the second-best model chatPJLM-123B achieves less than 40%. 
 2. 
 
 ![UniEval Result](/assets/UniEval_passrate.png)
