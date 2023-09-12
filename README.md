@@ -10,7 +10,7 @@ The recent progress of Large Language Models (LLMs) represents a significant adv
 
 > We define **chat** as the words spoken by **one participant in a specific round** of the conversation. 
 
-**MuTual-Test. ** [MuTual](https://github.com/Nealcly/MuTual) is a multi-turn dialogue dataset, which is modified from Chinese high school English listening comprehension test data. We use the first two chats of each conversation in the MuTual-Test as the *SEED* to generate the entire conversation based on LLMs. When generating the conversation, we use the same system prompt for all LLMs, which is:
+**MuTual-Test.** [MuTual](https://github.com/Nealcly/MuTual) is a multi-turn dialogue dataset, which is modified from Chinese high school English listening comprehension test data. We use the first two chats of each conversation in the MuTual-Test as the *SEED* to generate the entire conversation based on LLMs. When generating the conversation, we use the same system prompt for all LLMs, which is:
 
 ```python
 """
@@ -38,7 +38,7 @@ msg_list = [
 chat5 = model.generate(msg_list)
 ```
 
-We save all generated conversations in `data/MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $$\times$$ 10 LLMs **, which yields in **5470 generated conversations** in total. 
+We save all generated conversations in `data/MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $\times$ 10 LLMs**, which yields in **5470 generated conversations** in total. 
 
 - 547 conversation SEEDS: MuTual-Test includes 547 unique conversations. We keep the first 2 chats of each conversation to form 547 conversation SEEDs. 
 - 10 LLMs: The model list is: gpt-3.5-turbo-0613, gpt-4-0613, claude-2,  abab5-chat, chatPJLM-123B, chatglm2-6b, qwen-7b-chat, internlm-7b-chat, llama2-7b-chat, llama2-13b-chat.
