@@ -59,6 +59,12 @@ chats = json.loads(line[MODEL])
 print(chats) # Chats is a list of multiple strings, each string is a chat spoken by one participant (alternatively)
 ```
 
+**Length Statistics of the generated chats**
+
+We 
+
+ 
+
 ## Evaluation
 
 ### Assessment each single conversation
@@ -96,8 +102,9 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In the figure below, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$.  Here we summarize our major findings:
 
-1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves over 65% success rate in generating conversations as long as $N=16$, while the second-best model chatPJLM-123B achieves less than 40%. 
-2. 
+1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves over 65% success rate in generating conversations as long as $N=16$, while the second-best model chatpjlm-123B achieves less than 40%. 
+2. Some OpenSource LLMs, such as InternLM-7b-chat and ChatGLM2-6b,  achieves good performance when generating short conversations ($N=4$ or $N=8$). However, when $N$ is increased to 16, their performance lags behind the state-of-the-art chatbots like gpt-3.5-turbo-0613.
+3. Claude-2 achieves the worst performance among all closed source LLMs. It strongly inclined to act like an AI assistant and generate relatively long contents. Thus it performs badly when used to generate human chats, which is usually short and less structuralized. 
 
 ![UniEval Result](/assets/UniEval_passrate.png)
 
