@@ -1,10 +1,20 @@
-# BotChat Benchmark
+# BotChat Benchmark (WIP)
 
 > Can two ChatBot instances chat smoothly and fluently with each other?
 
 ## Introduction
 
-The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**? 
+The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**?
+
+## Progress & TODO
+
+**Progress**
+
+- [x] 
+
+**TODO**
+
+- [ ] 
 
 ## Conversation Generation
 
@@ -113,6 +123,8 @@ We evaluate all 5470 generated conversations with the above-mentioned strategy a
 ![UniEval Result](/assets/UniEval_passrate.png)
 
 ### BotChat Arena
+
+
 
 ### Compared to the "Ground Truth"
 
