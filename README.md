@@ -118,8 +118,6 @@ We evaluate all 5470 generated conversations with the above-mentioned strategy a
 
 ### Qualitative Analysis
 
-#### Error Cases
-
 ## Conclusion
 
 
