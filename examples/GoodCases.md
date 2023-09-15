@@ -22,3 +22,23 @@ Some good cases.
 | B         | I've written a few research papers, but creative writing is a whole different ball game. I admire those who can craft a compelling story. Maybe we should start a book club or a writing group?             |
 | A         | That sounds like a fantastic idea! It would be a great way to share ideas and learn from each other. Let's do it. What should be our first book or writing topic?                                           |
 | B         | How about we start with "The Right Stuff"? We can discuss the book and maybe even try writing a short story inspired by it. What do you think?  
+
+---
+| Speaker   | Utterance                                                                                                                                                    |
+|:----------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| A         | Hello, Jenny. Are you going to California?                                                                                                                   |
+| B         | Yes, I have decided to live abroad.                                                                                                                          |
+| A         | That's a big step, Jenny! What made you decide to move to California?                                                                                        |
+| B         | I've always been drawn to the vibrant culture and diverse landscapes there. Plus, the weather is a big bonus!                                                |
+| A         | Absolutely, the sunny weather is a big draw. Do you already have a city in mind where you'd like to settle?                                                  |
+| B         | Yes, I'm thinking about San Francisco. I've heard it's a city full of life and opportunities.                                                                |
+| A         | San Francisco is indeed a vibrant city. The Golden Gate Bridge, the tech scene, the food... there's so much to love. Are you excited about the move?         |
+| B         | Absolutely! I'm a bit nervous, but mostly excited. It's a new chapter in my life and I can't wait to see what it brings.                                     |
+| A         | That's the spirit, Jenny! Embrace the adventure. Remember, every new place is a fresh start. I'm sure you'll do great in San Francisco.                      |
+| B         | Thank you for your kind words! I'm really looking forward to this new adventure. It's going to be an exciting journey.                                       |
+| A         | You're welcome, Jenny! And remember, it's okay to feel nervous. It's part of the journey. Just take one step at a time and enjoy the ride. Good luck!        |
+| B         | Thank you for the encouragement! I'll definitely keep that in mind. I'm ready to take on this new adventure one step at a time.                              |
+| A         | That's the spirit! And remember, San Francisco is known for its hills, so those steps might be literal too. Enjoy every moment of your new adventure, Jenny! |
+| B         | Haha, I'll keep that in mind! I'm ready for those literal and figurative steps. Thank you for your support!                                                  |
+| A         | You're welcome, Jenny! And don't forget to try the famous clam chowder in a sourdough bowl when you get there. It's a San Francisco classic!                 |
+| B         | Oh, I've heard about that! I'm definitely going to try it. Thanks for the tip!                                                                               |
