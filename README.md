@@ -81,9 +81,9 @@ We first count the length of those model-generated chats and provide some statis
 
 ## Evaluation
 
-### Assessment each single conversation
+### Assessment each single conversation (UniEval)
 
-#### Evaluation Prompt 
+**Evaluation Prompt** 
 
 We first use GPT-4 to evaluate each generated conversation separately. The workflow is: 
 
@@ -112,7 +112,7 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 ```
 
-#### Evaluation Result
+**Evaluation Result**
 
 We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$.  Here we summarize our major findings:
 
@@ -124,7 +124,17 @@ We evaluate all 5470 generated conversations with the above-mentioned strategy a
 
 ### BotChat Arena
 
+With **UniEval**, we have obtained some preliminary evaluation results. However, UniEval may have some intrinsic limitations. Although we have provided some evaluating guidance and context examples for the GPT-4 evaluator to follow, it would be impossible to explicitly **define** a decision boundary to divide human conversations and AI-generated conversations. 
 
+Another popular paradigm  to benchmark LLMs' capabilities is to compare two models' response to the same question / message with human / GPT-4 as the evaluator. A representative benchmark following this paradigm is [Chatbot Arena](https://lmsys.org/blog/2023-05-03-arena/). In this benchmark, users will interact with two different LLM instances. The user first posts a message, then two LLM instances provide their responses, and finally the user will determine which response is better. Inspired by that, in this project we propose another evaluation strategy named **BotChat Arena**, in which we use GPT-4 to compare two conversations and determine if the presented conversations are AI-generated. 
+
+**Evaluation Setting and Prompt** 
+
+In BotChat Arena, we select conversations from MuTual-Test which have at least 4 chats, resulting in 222 conversation SEEDs. For each conversation SEED, we build conversation pairs and inferne
+
+**Evaluation Results**
+
+**Consistency Analysis**
 
 ### Compared to the "Ground Truth"
 
