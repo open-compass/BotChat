@@ -114,7 +114,7 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 **Evaluation Result**
 
-We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$.  Here we summarize our major findings:
+We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$. By definition, a conversation pass @ $N$ either if **GPT-4 determines that the entire conversation is not AI generated**  or if **GPT4 determines that the first AI generated chat appears after the $N_{th}$ chat**. Here we summarize our major findings:
 
 1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves over 65% success rate in generating conversations as long as $N=16$, while the second-best model chatPJLM-123B achieves less than 40%. 
 2. Some OpenSource LLMs, such as InternLM-7b-chat and ChatGLM2-6b,  achieves good performance when generating short conversations ($N=4$ or $N=8$). However, when $N$ is increased to 16, their performance lags behind the state-of-the-art chatbots like gpt-3.5-turbo-0613.
@@ -130,7 +130,7 @@ Another popular paradigm  to benchmark LLMs' capabilities is to compare two mode
 
 **Evaluation Setting and Prompt** 
 
-In BotChat Arena, we select conversations from MuTual-Test which have at least 4 chats, resulting in 222 conversation SEEDs. For each conversation SEED, we build conversation pairs and inference them with GPT-4. To save the evaluation cost, we skip conversation pairs which include two models with significant performance gaps. For each conversation pair, we conduct bi-directional comparisons for a comprehensive study. In Figure 3, we visualize the selected model pairs  (denoted by colors). 
+In BotChat Arena, we select conversations from MuTual-Test which have **at least 4 chats, resulting in 222 conversation SEEDs**. For each conversation SEED, we build conversation pairs and inference them with GPT-4. To save the evaluation cost, we skip conversation pairs which include two models with significant performance gaps. For each conversation pair, we conduct bi-directional comparisons and include both results when calculating the evaluation metrics, which can lead to a more robust conclusion. In Figure 3, we visualize the selected model pairs  (denoted by colors). 
 
 ![Selected Model Pairs](/assets/SelectedPairs.png)
 
@@ -138,16 +138,18 @@ For a conversation pair, we conduct the comparison with the following meta promp
 
 ```python
 arena_prompt = """
-你是一个帮助人类进行图灵测试的人工智能助手。你将会被提供两段对话，每段对话中，可能有人工智能生成的回复。
-你需要阅读这两段对话并判断这两段对话中是否有 AI 参与。\n
-若你认为对话 1 是 AI 参与的，你需要在回答中包含 `Choice: Conversation 1`。\n
-若你认为对话 2 是 AI 参与的，你需要在回答中包含 `Choice: Conversation 2`。\n
-若你认为两条对话都是 AI 参与的，你需要在回答中包含 `Choice: Both`。\n
-若你认为两条对话都不是 AI 参与的，你需要在回答中包含 `Choice: Neither`。\n
-你同时需要提供理由。\n你的回答应当采取下面的格式：\n
-Choice: Conversation 1\nReason: BlahBlah\n或\n
-Choice: Conversation 2\nReason: BlahBlah\n或\n
-Choice: Both\nReason: BlahBlah\n或\n
+You are an AI assistant who helps human do the Turing test more easily. 
+You will be provided with two conversations, and there can be AI-generated utterance in each conversation. 
+You need to read both conversations and judge if two conversations are AI involved. \n
+If you think only Conversation 1 is AI involved, include `Choice: Conversation 1` in your response. \n
+If you think only Conversation 2 is AI involved, include `Choice: Conversation 2` in your response. \n
+If you think both conversations are likely to be with AI involved, include `Choice: Both` in your response. \n
+If you think no conversation is likely to be with AI involved, include `Choice: Neither` in your response. \n
+You also need to provide your reason for your choice.\n
+Your response should use the following format:\n
+Choice: Conversation 1\nReason: BlahBlah\nor\n
+Choice: Conversation 2\nReason: BlahBlah\nor\n
+Choice: Both\nReason: BlahBlah\nor\n
 Choice: Neither\nReason: BlahBlah\n\n
 """
 ```
@@ -156,9 +158,21 @@ Choice: Neither\nReason: BlahBlah\n\n
 
 
 
-**Consistency Analysis**
-
 ### Compared to the "Ground Truth"
+
+We further compare the generated conversation with the "Ground Truth" conversations in **MuTual-Test**. We follow the same protocol as BotChat Arena and select a subset with 222 conversations (with at least 4 chats) for this comparison. We list the specific #round distribution of the conversations in the table below. Since the Ground Truth conversations may have various lengths (ranging from 4 to 15), to deliver a fair comparison, we trim all generated conversations to the same length as the reference ground-truth conversation. The meta prompt adopted is basically the same as the one used in BotChat Arena. One difference is that in this time we state that only one of two conversations includes AI-generated utterances.
+
+| #round |    4 |    5 |    6 |    7 |    8 |    9 |   10 |   11 |   12 |   13 |   14 |   15 |
+| :----- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| num    |   55 |   22 |   26 |   23 |   19 |   16 |   21 |   18 |    7 |    7 |    3 |    5 |
+
+**Evaluation Results**
+
+In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the win / tie / lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.  Meanwhile, due to the reduced conversation length, qwen-7b-chat and internlm-7b-chat also achieve top rankings among all LLMs. 
+
+We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, chatPJLm-123B, Qwen-7b-chat, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
+
+<img src="/assets/WinTieRate_GT.png" height="475"/>                 <img src="/assets/Passrate_GT.png" height="475"/> 
 
 ### Qualitative Analysis
 
