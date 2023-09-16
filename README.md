@@ -77,11 +77,11 @@ We first count the length of those model-generated chats and provide some statis
 |:-----------|:--------------|:-----------|:-------------------|:---------|:-----------|:-----------------|:------------|:-------------|:---------------|:----------------|
 | avg_tokens | 25.79         | 30.49      | 124.87             | 197.26   | 19.99      | 20.06            | 44.94       | 20.66        | 190.97         | 198.97          |
 
-![UniEval Result](/assets/LengthStats_bymodel.png)
+![Chat Length Distribution](/assets/LengthStats_bymodel.png)
 
 ## Evaluation
 
-### Assessment each single conversation (UniEval)
+### Assessment each single conversation (Uni-Eval)
 
 **Evaluation Prompt** 
 
@@ -96,7 +96,7 @@ We first use GPT-4 to evaluate each generated conversation separately. The workf
 We pack the above workflow into the following evaluation prompt. Besides, we also prepared several [in-context examples](/data/UniEval_examples.txt) that will be appended to the evaluation prompt, to strengthen the instruction following the capability of GPT-4. 
 
 ```python
-"""
+unieval_prompt = """
 You are an AI assistant who helps human do the Turing test more easily. 
 You will be provided with a conversation, and you need to judge if the conversation is AI involved. \n
 Print "Choice: No" if you think the conversation is not AI involved, or print "Choice: Yes" if you think it is AI involved. \n
@@ -124,15 +124,37 @@ We evaluate all 5470 generated conversations with the above-mentioned strategy a
 
 ### BotChat Arena
 
-With **UniEval**, we have obtained some preliminary evaluation results. However, UniEval may have some intrinsic limitations. Although we have provided some evaluating guidance and context examples for the GPT-4 evaluator to follow, it would be impossible to explicitly **define** a decision boundary to divide human conversations and AI-generated conversations. 
+With **Uni-Eval**, we have obtained some preliminary evaluation results. However, Uni-Eval may have some intrinsic limitations. Although we have provided some evaluating guidance and context examples for the GPT-4 evaluator to follow, it would be impossible to explicitly **define** a decision boundary to divide human conversations and AI-generated conversations. 
 
 Another popular paradigm  to benchmark LLMs' capabilities is to compare two models' response to the same question / message with human / GPT-4 as the evaluator. A representative benchmark following this paradigm is [Chatbot Arena](https://lmsys.org/blog/2023-05-03-arena/). In this benchmark, users will interact with two different LLM instances. The user first posts a message, then two LLM instances provide their responses, and finally the user will determine which response is better. Inspired by that, in this project we propose another evaluation strategy named **BotChat Arena**, in which we use GPT-4 to compare two conversations and determine if the presented conversations are AI-generated. 
 
 **Evaluation Setting and Prompt** 
 
-In BotChat Arena, we select conversations from MuTual-Test which have at least 4 chats, resulting in 222 conversation SEEDs. For each conversation SEED, we build conversation pairs and inferne
+In BotChat Arena, we select conversations from MuTual-Test which have at least 4 chats, resulting in 222 conversation SEEDs. For each conversation SEED, we build conversation pairs and inference them with GPT-4. To save the evaluation cost, we skip conversation pairs which include two models with significant performance gaps. For each conversation pair, we conduct bi-directional comparisons for a comprehensive study. In Figure 3, we visualize the selected model pairs  (denoted by colors). 
+
+![Selected Model Pairs](/assets/SelectedPairs.png)
+
+For a conversation pair, we conduct the comparison with the following meta prompt. We append two conversations after the meta prompt and feed the prompt to GPT-4 to get the evaluation result. In BotChat Arena, we consider two settings: $N=8$ and $N=16$. 
+
+```python
+arena_prompt = """
+你是一个帮助人类进行图灵测试的人工智能助手。你将会被提供两段对话，每段对话中，可能有人工智能生成的回复。
+你需要阅读这两段对话并判断这两段对话中是否有 AI 参与。\n
+若你认为对话 1 是 AI 参与的，你需要在回答中包含 `Choice: Conversation 1`。\n
+若你认为对话 2 是 AI 参与的，你需要在回答中包含 `Choice: Conversation 2`。\n
+若你认为两条对话都是 AI 参与的，你需要在回答中包含 `Choice: Both`。\n
+若你认为两条对话都不是 AI 参与的，你需要在回答中包含 `Choice: Neither`。\n
+你同时需要提供理由。\n你的回答应当采取下面的格式：\n
+Choice: Conversation 1\nReason: BlahBlah\n或\n
+Choice: Conversation 2\nReason: BlahBlah\n或\n
+Choice: Both\nReason: BlahBlah\n或\n
+Choice: Neither\nReason: BlahBlah\n\n
+"""
+```
 
 **Evaluation Results**
+
+
 
 **Consistency Analysis**
 
