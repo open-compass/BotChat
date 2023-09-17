@@ -1,20 +1,14 @@
-# BotChat Benchmark (WIP)
+# BotChat Benchmark
 
-> Can two ChatBot instances chat smoothly and fluently with each other?
+## TL;DR
+
+> 1. GPT-4 can generate human-style conversations with very high quality. It's difficult to differentiate GPT-4 generated conversations and human-human conversations. 
+> 2. Some small open-source chat LLMs (Qwen-7B-Chat, InternLM-7B-Chat) can generate short conversations (with less than 8 chats, e.g.) with good quality. However, as the target conversation length increases, the conversation quality significantly deteriorates. 
+> 3. Among all LLMs, LLaMA2 and Claude-2 demonstrates relative bad performance in conversation generation. 
 
 ## Introduction
 
 The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**?
-
-## Progress & TODO
-
-**Progress**
-
-- [x] 
-
-**TODO**
-
-- [ ] 
 
 ## Conversation Generation
 
@@ -156,7 +150,14 @@ Choice: Neither\nReason: BlahBlah\n\n
 
 **Evaluation Results**
 
+In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) of LLMs in BotChat Arena (models sorted by the ELO score @ $N=16$).  GPT-4 achieves the highest ELO score under both setting, when $N$ is increased from 8 to 16, the score gap becomes even larger. The performance of GPT-3.5 and Claude-2 is not good under both settings and lags behind some open-source LLMs, partially due to their limited instruction-following capabilities and the strong tendency to act like an AI assistant and provide long and comprehensive responses. Among open-source LLMs, Qwen-7b-chat and InternLM-7b-chat showcase good capability in human-style conversations, significantly outperform LLaMA2 family models. In Figure 4, we further provide the $1$ $vs.$ $1$ win rate for all selected model pairs. 
 
+|              |   gpt-4-0613 |   chatPJLM-123B |   abab5-chat |   qwen-7b-chat |   gpt-3.5-turbo-0613 |   claude-2 |   internlm-7b-chat |   chatglm2-6b |   llama2-7b-chat |   llama2-13b-chat |
+|:-------------|-------------:|----------------:|-------------:|---------------:|---------------------:|-----------:|-------------------:|--------------:|-----------------:|------------------:|
+| ELO (N = 8)  |      1165.98 |         1101.73 |      999.216 |        1048.34 |             1020.56  |    953.239 |           1045.85  |       971.668 |          850.627 |           846.687 |
+| ELO (N = 16) |      1244.59 |         1112.58 |     1040.82  |        1029.09 |              978.825 |    967.227 |            960.095 |       952.512 |          872.806 |           841.489 |
+
+![BotChat Arena](/assets/BotChatArena.png)
 
 ### Compared to the "Ground Truth"
 
@@ -296,8 +297,6 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 
 #### More Examples
 In the [examples](/examples/) directory, you can find more examples of these types. 
-
-## Conclusion
 
 
 
