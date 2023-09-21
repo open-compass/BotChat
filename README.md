@@ -1,5 +1,7 @@
 # BotChat Benchmark
 
+![Teaser](/assets/teaser.png)
+
 ## TL;DR
 
 > 1. GPT-4 can generate human-style conversations with very high quality. It's difficult to differentiate GPT-4 generated conversations and human-human conversations. 
