@@ -8,6 +8,19 @@
 > 2. Some small open-source chat LLMs (Qwen-7B-Chat, InternLM-7B-Chat) can generate short conversations (with less than 8 chats, e.g.) with good quality. However, as the target conversation length increases, the conversation quality significantly deteriorates. 
 > 3. Among all LLMs, LLaMA2 and Claude-2 demonstrates relative bad performance in conversation generation. 
 
+## Leaderboard
+
+| Model              | Win + Tie Rate (*vs. GT,* Golder Standard) | Avg Chat Token Length | Uni-Eval Pass Rate (N=16) | Uni-Eval Pass Rate (N=8) | ELO Score (N=16) | ELO Score (N=8) |
+| ------------------ | :----------------------------------------: | :-------------------: | :-----------------------: | :----------------------: | :--------------: | :-------------: |
+| GPT-4-0613         |                  **73.2**                  |         30.49         |           65.1            |           86.1           |      1251.7      |     1162.5      |
+| Qwen-7B-Chat       |                  **54.0**                  |         20.66         |           15.9            |           59.4           |      1049.8      |     1059.9      |
+| InternLM-7B-Chat   |                  **46.6**                  |         20.06         |            6.8            |           59.0           |      979.8       |     1060.8      |
+| GPT-3.5-turbo-0613 |                  **35.8**                  |        124.87         |           21.9            |           42.6           |      1001.7      |     1027.4      |
+| ChatGLM2-6B        |                  **33.7**                  |         44.94         |            5.3            |           43.0           |      973.1       |      986.4      |
+| Claude-2           |                  **21.7**                  |        197.26         |            9.0            |           17.6           |      991.2       |      968.1      |
+| Llama2-7B          |                  **12.4**                  |        190.97         |            4.9            |           16.6           |      894.2       |      870.0      |
+| Llama2-13B         |                  **10.6**                  |        198.97         |            7.7            |           23.4           |      864.5       |      865.5      |
+
 ## Introduction
 
 The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**?
