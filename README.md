@@ -174,9 +174,11 @@ We further compare the generated conversation with the "Ground Truth" conversati
 
 In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the Win/Tie/Lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.  Meanwhile, due to the reduced conversation length, qwen-7b-chat and internlm-7b-chat also achieve top rankings among all LLMs. 
 
+![WinTieRate](/assets/WinTieRate_GT.png)
+
 We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, Qwen-7b-chat, InternLM-7B, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
 
-<img src="/assets/WinTieRate_GT.png" height="475"/>                 <img src="/assets/Passrate_GT.png" height="475"/> 
+![PassRate_GT](/assets/PassRate_GT.png)
 
 ### Qualitative Analysis
 In this section, we will conduct qualitative analysis on the results, categorizing bad cases into five distinct types. The specific analysis is as follows:
