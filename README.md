@@ -329,3 +329,15 @@ In the [examples](/examples/) directory, you can find more examples of these typ
 }
 ```
 
+## OpenCompass Projects
+
+The project is a part of OpenCompass. OpenCompass is a platform focused on evaluation of AGI, include Large Language Model and Multi-modality Model. We aim to:
+- develop high-quality libraries to reduce the difficulties in evaluation
+- provide convincing leaderboards for improving the understanding of the large models
+- create powerful toolchains targeting a variety of abilities and tasks
+- build solid benchmarks to support the large model research
+
+**Other Projects in OpenCompass**
+- [opencompass](https://github.com/open-compass/opencompass): An LLM evaluation platform, supporting a wide range of models (LLaMA, LLaMa2, ChatGLM2, ChatGPT, Claude, etc) over 50+ datasets.
+- [MMBench](https://github.com/open-compass/MMBench): Official Repo of "MMBench: Is Your Multi-modal Model an All-around Player?"
+- [code-evaluator](https://github.com/open-compass/code-evaluator): A tool for evaluating generated codes written in different programming languages.
