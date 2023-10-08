@@ -18,8 +18,8 @@ model_map = {
     'gpt4': partial(OpenAIWrapper, model='gpt-4-0613')
 }
 hf_model_map = {
-    'qwen-7b-chat-int4': partial(QwenWrapper, model_path='llm_weights/Qwen-7B-Chat-Int4'),
-    'chatglm2-6b-int4': partial(ChatGLM2Wrapper, model_path='llm_weights/chatglm2-6b-int4')
+    'qwen-7b-chat-int4': partial(QwenWrapper, model_path='./llm_weights/Qwen-7B-Chat-Int4'),
+    'chatglm2-6b-int4': partial(ChatGLM2Wrapper, model_path='./llm_weights/chatglm2-6b-int4')
 }
 model_map.update(hf_model_map)
 
