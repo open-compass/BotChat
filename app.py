@@ -17,7 +17,10 @@ model_map = {
     'gpt35': partial(OpenAIWrapper, model='gpt-3.5-turbo-0613'), 
     'gpt4': partial(OpenAIWrapper, model='gpt-4-0613')
 }
-hf_model_map = {'qwen-7b-chat-int4':QwenWrapper,'chatglm2-6b-int4':ChatGLM2Wrapper}
+hf_model_map = {
+    'qwen-7b-chat-int4': partial(QwenWrapper, model_path='llm_weights/Qwen-7B-Chat-Int4'),
+    'chatglm2-6b-int4': partial(ChatGLM2Wrapper, model_path='llm_weights/chatglm2-6b-int4')
+}
 model_map.update(hf_model_map)
 
 def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt, 
@@ -31,7 +34,7 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
     chats.append(sentence1)
     indices.append(0)
     yield [chatbot, chats, indices]
-    if len(sentence2)<1:
+    if len(sentence2) < 1:
         pass           
     else:
         chats.append(sentence2)
@@ -57,8 +60,10 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
                     return 'Failed to obtain answer via API. Length Exceeded. ', -1
                 ret = model.chat(chats[st:])
             return (ret, st)
+        
     print(chats)
     st = 0
+
     while len(chats) < round_max:
         if len(chats) % 2 == 0:
             msg, cidx = try_chat(ma, chats, st=st)
@@ -67,7 +72,6 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
             indices.append(cidx)
             if cidx == -1:
                 break
-
         else:
             msg, cidx = try_chat(mb, chats, st=st)
             chats.append(msg)
@@ -75,9 +79,9 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
             indices.append(cidx)
             if cidx == -1:
                 break
+
         print(chatbot)
         yield [chatbot, chats, indices]
-        
         
     return 
 
