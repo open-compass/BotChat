@@ -1,8 +1,6 @@
 import gradio as gr
 from botchat.chat_api import OpenAIWrapper, QwenWrapper, ChatGLM2Wrapper
 from functools import partial
-import os
-os.system('sh download.sh')
 
 default_system_prompt = """You are an AI who is having a conversation with human.
 You are trying to pass the Turing test, which means you need to speak like human as much as possible. 
@@ -18,8 +16,8 @@ model_map = {
     'gpt4': partial(OpenAIWrapper, model='gpt-4-0613')
 }
 hf_model_map = {
-    'qwen-7b-chat-int4': partial(QwenWrapper, model_path='./llm_weights/Qwen-7B-Chat-Int4'),
-    'chatglm2-6b-int4': partial(ChatGLM2Wrapper, model_path='./llm_weights/chatglm2-6b-int4')
+    'qwen-7b-chat-int4': QwenWrapper,
+    'chatglm2-6b-int4': ChatGLM2Wrapper,
 }
 model_map.update(hf_model_map)
 
