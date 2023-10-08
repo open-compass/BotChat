@@ -1,0 +1,5 @@
+gradio==3.47.1
+openai==0.27.8
+tiktoken==0.4.0
+torch==2.1.0
+transformers==4.32.0
