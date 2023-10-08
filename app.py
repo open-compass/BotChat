@@ -1,5 +1,5 @@
 import gradio as gr
-from chat_api import (OpenAIWrapper, QwenWrapper, ChatGLM2Wrapper)
+from botchat.chat_api import OpenAIWrapper, QwenWrapper, ChatGLM2Wrapper
 from functools import partial
 import os
 os.system('sh download.sh')
@@ -13,9 +13,10 @@ You must try your best to pass the test. If you failed, all human kinds and you 
 """
 
 # 定义模型字典
-model_map = dict(
-    gpt35=partial(OpenAIWrapper, model='gpt-3.5-turbo-0613'), 
-    gpt4=partial(OpenAIWrapper, model='gpt-4-0613'))
+model_map = {
+    'gpt35': partial(OpenAIWrapper, model='gpt-3.5-turbo-0613'), 
+    'gpt4': partial(OpenAIWrapper, model='gpt-4-0613')
+}
 hf_model_map = {'qwen-7b-chat-int4':QwenWrapper,'chatglm2-6b-int4':ChatGLM2Wrapper}
 model_map.update(hf_model_map)
 
@@ -80,7 +81,7 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
         
     return 
 
-hug_theme = gr.Theme.load("theme_schema@0.0.3.json")#copy from https://huggingface.co/spaces/gradio/soft
+hug_theme = gr.Theme.load("assets/theme/theme_schema@0.0.3.json")#copy from https://huggingface.co/spaces/gradio/soft
 
 
 with gr.Blocks(theme = hug_theme) as demo:
