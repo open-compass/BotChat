@@ -48,9 +48,11 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
         mb = model_map[model_b](temperature=temperature, system_prompt=prompt_b, key=key_b)
     else:
         mb = model_map[model_b](system_prompt=prompt_b, key=key_b)
+    flag_hf_a = model_a in hf_model_map
+    flag_hf_b = model_b in hf_model_map
 
-    def try_chat(model, chats, st=0):
-        if isinstance(model, tuple(hf_model_map.values())):
+    def try_chat(model, chats, st=0, flag_hf=False):
+        if flag_hf:
             return model.chat(chats)
         else:
             ret = model.chat(chats[st:])
@@ -66,14 +68,14 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
 
     while len(chats) < round_max:
         if len(chats) % 2 == 0:
-            msg, cidx = try_chat(ma, chats, st=st)
+            msg, cidx = try_chat(ma, chats, st=st, flag_hf=flag_hf_a)
             chats.append(msg)
             chatbot.append([chats[-1], None])
             indices.append(cidx)
             if cidx == -1:
                 break
         else:
-            msg, cidx = try_chat(mb, chats, st=st)
+            msg, cidx = try_chat(mb, chats, st=st, flag_hf=flag_hf_b)
             chats.append(msg)
             chatbot[-1][1] = chats[-1]
             indices.append(cidx)
@@ -82,7 +84,7 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
 
         print(chatbot)
         yield [chatbot, chats, indices]
-        
+
     return 
 
 hug_theme = gr.Theme.load("assets/theme/theme_schema@0.0.3.json")#copy from https://huggingface.co/spaces/gradio/soft
