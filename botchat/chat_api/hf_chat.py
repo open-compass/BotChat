@@ -82,7 +82,7 @@ class HFChatModel:
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, **revision_kwargs)
 
         if model_path == 'THUDM/chatglm2-6b-int4':
-            self.model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
+            model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
         else:
             model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
         model = model.eval()
@@ -90,7 +90,7 @@ class HFChatModel:
             model.generation_config = GenerationConfig.from_pretrained(model_path, trust_remote_code=True, **revision_kwargs)
         except:
             pass
-        
+
         self.model = model
         self.context_length = self._get_context_length(model=model, model_path=model_path)
         self.answer_buffer = 192
