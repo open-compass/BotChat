@@ -17,8 +17,8 @@ model_map = {
 }
 # dict of HF models (models)
 hf_model_map = {
-    'qwen-7b-chat-int4': HFChatModel('Qwen/Qwen-7B-Chat-Int4', system_prompt=default_system_prompt, cpu_loading=False),
-    'chatglm2-6b-int4': HFChatModel('THUDM/chatglm2-6b-int4', system_prompt=default_system_prompt, cpu_loading=True),
+    'qwen-7b-chat-int4': HFChatModel('Qwen/Qwen-7B-Chat-Int4', system_prompt=default_system_prompt),
+    'chatglm2-6b-int4': HFChatModel('THUDM/chatglm2-6b-int4', system_prompt=default_system_prompt),
 }
 all_models = list(model_map.keys()) + list(hf_model_map.keys())
 

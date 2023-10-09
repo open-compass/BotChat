@@ -53,7 +53,6 @@ class HFChatModel:
                  model_path, 
                  system_prompt: str=None,
                  temperature: float=0, 
-                 cpu_loading: bool=True,
                  **model_kwargs):
 
         self.explicit_device = model_kwargs.pop('device', None)
@@ -72,10 +71,7 @@ class HFChatModel:
         if model_path in model_map:
             model_path = model_map[model_path]
         self.model_path = model_path
-        if 'THUDM/chatglm2-6b' in model_path:
-            LoadModel=AutoModel
-        else:
-            LoadModel=AutoModelForCausalLM
+
         assert osp.exists(model_path) or len(model_path.split('/')) == 2
 
         revision_kwargs = {}
@@ -85,20 +81,15 @@ class HFChatModel:
         device = self.explicit_device if self.explicit_device else "auto"
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, **revision_kwargs)
 
-        self.cpu_loading = cpu_loading
-        if cpu_loading:
-            device = 'cpu'
-        model = LoadModel.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
-        if 'chatglm2-6b-int4' in model_path:
-            model = model.half()
-        if cpu_loading:
-            model = model.cuda()
+        if model_path == 'THUDM/chatglm2-6b-int4':
+            self.model = AutoModel.from_pretrained(model_path, trust_remote_code=True).half().cuda()
+        else:
+            model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
         model = model.eval()
         try:
-            model.generation_config = GenerationConfig.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
+            model.generation_config = GenerationConfig.from_pretrained(model_path, trust_remote_code=True, **revision_kwargs)
         except:
             pass
-
         
         self.model = model
         self.context_length = self._get_context_length(model=model, model_path=model_path)
