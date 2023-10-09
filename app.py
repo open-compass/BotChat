@@ -31,14 +31,11 @@ def build_model(model_name, sys_prompt, api_key, temperature):
         raise NotImplementedError
     
 def rich_dialogue(chatbot):
-    rich_chatbot = gr.State([])
+    rich_chatbot = cp.deepcopy(chatbot)
     from termcolor import colored
-    for i, turn in enumerate(chatbot):
-        msg1, msg2 = None, None
-        msg1 = colored(f'Bot 1, Turn {i + 1}: ', 'light_red', attrs=['bold']) + turn[0]
-        if turn[1]:
-            msg2 = colored(f'Bot 2, Turn {i + 1}: ', 'light_blue', attrs=['bold']) + turn[1]
-        rich_chatbot.append([msg1, msg2])
+    for i, turn in enumerate(rich_chatbot):
+        turn[0] = colored(f'Bot 1, Turn {i + 1}: ', 'light_red', attrs=['bold']) + turn[0]
+        turn[1] = colored(f'Bot 2, Turn {i + 1}: ', 'light_blue', attrs=['bold']) + turn[1] if turn[1] is not None else None
     return rich_chatbot
     
 def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt, 
@@ -150,7 +147,7 @@ with gr.Blocks(theme = hug_theme) as demo:
             gr.Examples([["You're watching TV again Peter.", "I have washed all the bowls and plates."],
                          ["May I speak to you, Mr. Hall?", "Sure, Sonya. What's the problem?"]], inputs=[sentence1, sentence2])
             
-            chatbot = gr.State([])
+            chatbot = gr.Chatbot()
             chats = gr.State([])
             indices = gr.State([])
 
