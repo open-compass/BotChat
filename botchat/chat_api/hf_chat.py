@@ -29,7 +29,6 @@ model_map = {
     'baichuan-13b-chat':'baichuan-inc/Baichuan-13B-Chat',
     'moss':'fnlp/moss-moon-003-sft'
 }
-Auto_model=['THUDM/chatglm2-6b']
 revision_map = {
     'THUDM/chatglm2-6b': 'b1502f4f75c71499a3d566b14463edd62620ce9f',
     'baichuan-inc/Baichuan-13B-Chat':'b3ca596c403e84a72476349de5cb2a03a522c368'
@@ -71,8 +70,8 @@ class HFChatModel:
         
         if model_path in model_map:
             model_path = model_map[model_path]
-        self.model_path=model_path
-        if model_path in Auto_model:
+        self.model_path = model_path
+        if 'THUDM/chatglm2-6b' in model_path:
             LoadModel=AutoModel
         else:
             LoadModel=AutoModelForCausalLM
