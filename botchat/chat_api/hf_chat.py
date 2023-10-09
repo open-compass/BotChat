@@ -53,6 +53,7 @@ class HFChatModel:
                  model_path, 
                  system_prompt: str=None,
                  temperature: float=0, 
+                 cpu_loading: bool=True,
                  **model_kwargs):
 
         self.explicit_device = model_kwargs.pop('device', None)
@@ -83,13 +84,22 @@ class HFChatModel:
 
         device = self.explicit_device if self.explicit_device else "auto"
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True, **revision_kwargs)
+
+        self.cpu_loading = cpu_loading
+        if cpu_loading:
+            device = 'cpu'
         model = LoadModel.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
+        if 'chatglm2-6b-int4' in model_path:
+            model = model.half()
+        if cpu_loading:
+            model = model.cuda()
+        model = model.eval()
         try:
             model.generation_config = GenerationConfig.from_pretrained(model_path, trust_remote_code=True, device_map=device, **revision_kwargs)
         except:
             pass
 
-        model = model.eval()
+        
         self.model = model
         self.context_length = self._get_context_length(model=model, model_path=model_path)
         self.answer_buffer = 192
