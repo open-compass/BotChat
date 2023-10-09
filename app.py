@@ -29,18 +29,30 @@ def build_model(model_name, sys_prompt, api_key, temperature):
         return hf_model_map[model_name]
     else:
         raise NotImplementedError
-
+    
+def rich_dialogue(chatbot):
+    rich_chatbot = gr.Chatbot()
+    from termcolor import colored
+    for i, turn in enumerate(chatbot):
+        msg1, msg2 = None, None
+        msg1 = colored(f'Bot 1, Turn {i + 1}: ', 'light_red', attrs=['bold']) + turn[0]
+        if turn[1]:
+            msg2 = colored(f'Bot 2, Turn {i + 1}: ', 'light_blue', attrs=['bold']) + turn[1]
+        rich_chatbot.append([msg1, msg2])
+    return rich_chatbot
+    
 def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt, 
                    prompt_b=default_system_prompt, key_a=None, key_b=None, 
                    sentence1=None, sentence2=None, round_max=4, temperature=0, chats=[], indices=[]):
     if len(sentence1)<1:
-        yield [["请至少输入一句话/Please input at least one sentence",None]], chats, indices
+        yield [["请至少输入一句话 / Please input at least one sentence", None]], chats, indices
         return 
+    
     round_max = int(round_max)
     chatbot.append([sentence1, sentence2])
     chats.append(sentence1)
     indices.append(0)
-    yield [chatbot, chats, indices]
+    yield [rich_dialogue(chatbot), chats, indices]
     if len(sentence2) < 1:
         pass           
     else:
@@ -86,7 +98,7 @@ def chat_generator(chatbot, model_a, model_b, prompt_a=default_system_prompt,
                 break
 
         print(chatbot, flush=True)
-        yield [chatbot, chats, indices]
+        yield [rich_dialogue(chatbot), chats, indices]
 
     return 
 
@@ -120,23 +132,23 @@ with gr.Blocks(theme = hug_theme) as demo:
 </html>
                 """
             )
-            model_a = gr.Dropdown(all_models, label="模型1/model 1", value='qwen-7b-chat-int4')
-            model_b = gr.Dropdown(all_models, label="模型2/model 2", value='chatglm2-6b-int4')
+            model_a = gr.Dropdown(all_models, label="模型 1 / model 1", value='qwen-7b-chat-int4')
+            model_b = gr.Dropdown(all_models, label="模型 2 / model 2", value='chatglm2-6b-int4')
             key_a = gr.Textbox(label="API Key 1（Optional）")
             key_b =gr.Textbox(label="API Key 2（Optional）")
-            with gr.Accordion(label="系统提示1/System Prompt 1", open=False):
-                prompt_a = gr.Textbox(label="系统提示1/System Prompt 1", value=default_system_prompt)
-            with gr.Accordion(label="系统提示2/System Prompt 2", open=False):
-                prompt_b = gr.Textbox(label="系统提示2/System Prompt 2", value=default_system_prompt)
+            with gr.Accordion(label="系统提示 1 / System Prompt 1", open=False):
+                prompt_a = gr.Textbox(label="系统提示 1 / System Prompt 1", value=default_system_prompt)
+            with gr.Accordion(label="系统提示 2 / System Prompt 2", open=False):
+                prompt_b = gr.Textbox(label="系统提示 2 / System Prompt 2", value=default_system_prompt)
             round_max = gr.Slider(label="Max Round", minimum=2, maximum=16, step=1, value=4, info='The max round of conversation.')
             temperature = gr.Slider(label="Temperature", minimum=0, maximum=1, step=0.05, value=0, info='The temperature of LLM. Only applicable to ChatGPT')
             
             
         with gr.Column():
-            sentence1 = gr.Textbox(label="第一句话/First Sentence")
-            sentence2 = gr.Textbox(label="第二句话（可选）/Second Sentence（Optional）")
-            gr.Examples([["Do you have any plans for next year?", "Well, I travel if I could afford it but I don't have any money."],
-                        ["Who wrote this? It's completely wrong.", "What do you mean?"]], inputs=[sentence1, sentence2])
+            sentence1 = gr.Textbox(label="第一句话 / First Utterance")
+            sentence2 = gr.Textbox(label="第二句话 (可选) / Second Utterance (Optional)")
+            gr.Examples([["You're watching TV again Peter.", "I have washed all the bowls and plates."],
+                         ["May I speak to you, Mr. Hall?", "Sure, Sonya. What's the problem?"]], inputs=[sentence1, sentence2])
             chatbot = gr.Chatbot()
 
             chats = gr.State([])
