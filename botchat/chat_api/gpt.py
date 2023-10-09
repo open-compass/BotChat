@@ -4,7 +4,6 @@ from typing import Dict, List, Optional, Union
 from collections import defaultdict
 
 
-
 class OpenAIWrapper:
 
     is_api: bool = True
@@ -18,9 +17,6 @@ class OpenAIWrapper:
                  temperature: float = 0,
                  key: str = None,
                 ):
-        
-        import tiktoken
-        self.tiktoken = tiktoken
 
         self.model = model
         self.system_prompt = system_prompt
