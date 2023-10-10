@@ -5,4 +5,6 @@ torch>=2.0.0
 transformers>=4.32.0
 optimum
 auto-gptq
-termcolor
+transformers_stream_generator
+einops
+
