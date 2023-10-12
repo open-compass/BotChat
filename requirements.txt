@@ -7,3 +7,4 @@ optimum
 auto-gptq
 transformers_stream_generator
 einops
+cpm_kernels
