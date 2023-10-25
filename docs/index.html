@@ -302,12 +302,12 @@
 
     
 
-                            winRateTd.textContent = Number(row['Win_Tie_Rate']).toFixed(2) + '%';
+                            winRateTd.textContent = Number(row['Win_Tie_Rate']).toFixed(1) + '%';
                             lengthTd.textContent = Math.round(Number(row['Length'])).toString() ;
-                            UE16.textContent = Number(row['Uni_Eval_16']).toFixed(2) + '%';
-                            UE8.textContent = Number(row['Uni_Eval_8']).toFixed(2) + '%';
-                            ELO16.textContent = Number(row['ELO_16']).toFixed(2);
-                            ELO8.textContent = Number(row['ELO_8']).toFixed(2);
+                            UE16.textContent = Number(row['Uni_Eval_16']).toFixed(1) + '%';
+                            UE8.textContent = Number(row['Uni_Eval_8']).toFixed(1) + '%';
+                            ELO16.textContent = Number(row['ELO_16']).toFixed(1);
+                            ELO8.textContent = Number(row['ELO_8']).toFixed(1);
 
                             tr.appendChild(nameTd);
                             tr.appendChild(winRateTd);
