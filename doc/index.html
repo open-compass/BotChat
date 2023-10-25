@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BotChat Leaderboard</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VWV023WWP4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-VWV023WWP4');
+    </script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="icon" href="botchat_logo.jpg">
+    <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 50px 20px;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        #branding {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #branding h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        table {
+            max-width: 1000px;
+            width: 100%;
+            table-layout: fixed;
+            margin: auto;
+            font-size: 1em;
+        }
+        
+        table th,
+        table td {
+            padding: 6px;
+            word-wrap: normal;
+            vertical-align: middle;
+        }
+        
+        table th {
+            border-bottom: 2px solid #000;
+        }
+
+        th:first-child,
+        td:first-child {
+            width: 45%;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        th:not(:first-child),
+        td:not(:first-child) {
+            text-align: right;
+            padding-right: 10px;
+        }
+        table tr:nth-child(even) {
+            background-color: #E8E8E8;
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #F8F8F8;
+        }
+        
+        tr:hover {
+            background-color: #ccc;
+        }
+
+        .switch-toggle {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .switch-toggle input + label {
+            padding: 2px;
+            padding-left: 7px;
+            padding-right: 7px;
+            cursor: pointer;
+            background-color: lightgrey;
+            border: 1px solid transparent;
+            font-size: 16px;
+        }
+
+        .switch-toggle input:checked + label {
+            border-color: green;
+            color: green;
+        }
+
+        .switch-toggle input:not(:checked) + label {
+            color: black;
+            box-shadow: none !important;
+            user-select: none;
+        }
+
+
+        .toggle-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .toggle-line .switch-toggle {
+            margin: 0 10px;
+        }
+
+        #documentation {
+            width: 800px; 
+            margin: 0 auto; 
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div id="branding">
+
+        <h1>BotChat
+            <a href="https://github.com/open-compass/BotChat">
+                <img src="botchat_logo.jpg"
+                     alt="Logo" style="height: 4em; vertical-align: middle;"></a>
+            Leaderboard
+        </h1>
+        <br>
+        <h2>Evaluating LLMs' Capabilities of Having Multi-Turn Dialogues</h2>
+        <small id="caution" style="color: #8C1515;">
+            <span style="color: #8C1515;">Caution:</span> GPT4 may favor models longer outputs and/or were fine-tuned on GPT4 outputs.
+        </small>
+        <br>
+        <a href="https://github.com/open-compass/BotChat">
+            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub logo" style="height: 1.5em;/* margin-bottom: 0; */">
+        </a>
+    </div>
+
+    <div class="toggle-line">
+
+        Evaluator:
+        <div class="switch-toggle switch-evaluator" style="margin-right: 4em">
+            <input id="gpt4" name="evaluator" type="radio" checked="checked"/>
+            <label for="gpt4" onclick="">GPT-4</label>
+            <!--            <input id="chatgpt" name="evaluator" type="radio"/>-->
+            <!--            <label for="chatgpt" onclick="">ChatGPT</label>-->
+        </div>
+
+        Filter:
+        <div class="switch-toggle switch-compactness">
+            <input id="community" name="compactness" type="radio" checked="checked"/>
+            <label for="community" onclick="">Community</label>
+            <input id="verified" name="compactness" type="radio"/>
+            <label for="verified" onclick="">Verified</label>
+            <input id="minimal" name="compactness" type="radio"/>
+            <label for="minimal" onclick="">Minimal</label>
+        </div>
+    </div>
+
+    <table id="leaderboard">
+        <tr>
+            <th>Model Name</th>
+            <th>Win&Tie Rate</th>
+            <th>Uni-Eval(N=16)</th>
+            <th>Uni-Eval(N=8)</th>
+            <th>ELO(N=16)</th>
+            <th>ELO(N=8)</th>
+            <th>Length</th>
+        </tr>
+    </table>
+
+
+    <div id="documentation">
+        <div style="text-align: center;">
+            <a href="https://github.com/open-compass/BotChat" style="display: inline-block;">
+                <i class="fab fa-fw fa-github" aria-hidden="true"></i> Github
+            </a>
+        </div>
+        <br>
+        <h2>About BotChat</h2>
+        <p>
+            <a href="https://github.com/open-compass/BotChat" target="_blank">BotChat</a>
+            evaluates LLMs's Capabilities of Having Multi-Turn Dialogues.
+            We begin with real-world human dialogues and then prompt Language Models to generate full multi-turn dialogues, 
+            one utterance at a time. These results are subsequently evaluated by state-of-the-art Language Models such as GPT-4. 
+            For more in-depth information, please refer to our 
+            <a href="https://github.com/open-compass/BotChat" target="_blank">documentation</a>.
+        </p>
+        <img src="Teaser.png" alt="Teaser" style="max-width: 100%;">
+        <h2>Leaderboard Metrics</h2>
+        <p>
+            We provide three different evaluation protocols:
+            <ul>
+                <li><b>GTEval</b>: A comparison of the generated conversations with "Ground Truth" conversations (Gold Standard). </li>
+                <li><b>UniEval</b>: Independent evaluation of each generated dialogue. </li>
+                <li><b>Arena ELO</b>: Comparative evaluation of responses from two distinct models. </li>
+            </ul>
+            In <b>UniEval</b> and <b>Arena ELO</b>, 'N' indicates the number of rounds of dialogue in each conversation.<br>
+            Length is the token lengths in utterances generated by models.
+        </p>
+        <h2>Citation</h2>
+        <div class="snippet-clipboard-content notranslate position-relative overflow-auto" data-snippet-clipboard-copy-content="@misc{2023botchat,
+            title={BotChat: A Benchmark for Evaluating the Multi-round Chatting Capability of ChatBots},
+            author={BotChat Contributors},
+            howpublished = {\url{https://github.com/open-compass/botchat}},
+            year={2023}
+        }"><pre class="notranslate"><code>
+        @misc{2023botchat,
+            title={BotChat: A Benchmark for Evaluating the Multi-round Chatting Capability of ChatBots},
+            author={BotChat Contributors},
+            howpublished = {\url{https://github.com/open-compass/botchat}},
+            year={2023}
+        }
+        </code></pre></div>
+        
+    </div>
+
+</div>
+
+<script>
+    const gpt4Radio = document.getElementById('gpt4');
+
+    const communityRadio = document.getElementById('community');
+    const verifiedRadio = document.getElementById('verified');
+    const minimalRadio = document.getElementById('minimal');
+
+    const table = document.getElementById('leaderboard');
+
+    const urls = {
+        'gpt4': 'https://raw.githubusercontent.com/open-compass/BotChat/page/docs/lb.csv',
+    }
+
+    let currentUrl = urls['gpt4'];
+
+    function updateTable(url) {
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            complete: function (results) {
+                console.log(results.data);
+                results.data.forEach(row => {
+                    if (row['Model']) {
+                        let filter = row['Filter'];
+
+                        if ((communityRadio.checked) ||
+                            (verifiedRadio.checked && (filter === 'verified' || filter === 'minimal')) ||
+                            (minimalRadio.checked && filter === 'minimal')) {
+
+                            const tr = document.createElement('tr');
+                            const nameTd = document.createElement('td');
+                            const winRateTd = document.createElement('td');
+                            const lengthTd = document.createElement('td');
+                            const UE16 = document.createElement('td');
+                            const UE8 = document.createElement('td');
+                            const ELO16 = document.createElement('td');
+                            const ELO8 = document.createElement('td');
+
+                            if (row['Link'] && row['Link'].trim() !== '') {
+                                const a = document.createElement('a');
+                                a.textContent = row['Model'];
+                                a.href = row['Link'];
+                                a.target = "_blank";
+                                nameTd.appendChild(a);
+                            } else {
+                                nameTd.textContent = row['Model'];
+                            }
+
+    
+
+                            winRateTd.textContent = Number(row['Win_Tie_Rate']).toFixed(2) + '%';
+                            lengthTd.textContent = Math.round(Number(row['Length'])).toString() ;
+                            UE16.textContent = Number(row['Uni_Eval_16']).toFixed(2) + '%';
+                            UE8.textContent = Number(row['Uni_Eval_8']).toFixed(2) + '%';
+                            ELO16.textContent = Number(row['ELO_16']).toFixed(2);
+                            ELO8.textContent = Number(row['ELO_8']).toFixed(2);
+
+                            tr.appendChild(nameTd);
+                            tr.appendChild(winRateTd);
+                            tr.appendChild(UE16);
+                            tr.appendChild(UE8);
+                            tr.appendChild(ELO8);
+                            tr.appendChild(ELO16);
+                            tr.appendChild(lengthTd);
+
+                            table.appendChild(tr);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function updateCautionMessage(evaluator) {
+        let cautionText;
+        if (evaluator === 'gpt4') {
+            cautionText = 'GPT-4 may favor models with longer outputs and/or those that were fine-tuned on GPT-4 outputs.';
+        } 
+        document.getElementById('caution').innerText = 'Caution: ' + cautionText;
+    }
+
+    updateTable(urls['gpt4']);
+
+    gpt4Radio.addEventListener('click', function () {
+        currentUrl = urls['gpt4'];
+        updateTable(currentUrl);
+        updateCautionMessage('gpt4');
+    });
+
+
+    communityRadio.addEventListener('click', function () {
+        updateTable(currentUrl);
+    });
+
+    verifiedRadio.addEventListener('click', function () {
+        updateTable(currentUrl);
+    });
+
+    minimalRadio.addEventListener('click', function () {
+        updateTable(currentUrl);
+    });
+
+    updateCautionMessage('gpt4');
+</script>
+
+
+</body>
+
+</html>

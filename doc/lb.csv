@@ -1,0 +1,15 @@
+﻿Model,Win_Tie_Rate,Length,Uni_Eval_16,Uni_Eval_8,ELO_16,ELO_8,Link,Filter
+GPT-4,73.2,30.5,65.1,86.1,1167.2,1103.9,,minimal
+Vicuna-13B,68,32.0,55,80.4,1113.3,1096.5,https://huggingface.co/lmsys/vicuna-13b-v1.5,minimal
+Qwen-14B-Chat,67.1,28.7,26,77.5,1046.5,1085.2,https://huggingface.co/Qwen/Qwen-14B-Chat,minimal
+Internlm-20B-Chat,64.2,24.4,36.2,76.6,1094.4,1092.8,https://huggingface.co/internlm/internlm-chat-20b,minimal
+Vicuna-7B,55.6,37.5,29.4,64.7,1050.8,1048.3,https://huggingface.co/lmsys/vicuna-7b-v1.5,minimal
+Qwen-7B-Chat,54.1,20.7,15.9,59.4,1014.2,1024.7,https://huggingface.co/Qwen/Qwen-7B-Chat,minimal
+Baichuan2-13B-Chat,47.1,58.0,22.3,63.4,1021.6,1023.4,https://huggingface.co/baichuan-inc/Baichuan2-13B-Chat,minimal
+InternLM-7B-Chat,46.6,20.1,6.8,59,1020.3,1020.3,https://huggingface.co/internlm/internlm-chat-7b,minimal
+GPT-3.5-turbo-0613,35.8,124.9,21.9,42.6,998.8,998.8,,minimal
+ChatGLM2-6B,33.8,44.9,5.3,43,962.3,962.3,https://huggingface.co/THUDM/chatglm2-6b,minimal
+Claude-2,21.4,197.3,9,17.6,944.5,944.5,,minimal
+Llama2-7B,12.4,191.0,4.9,16.6,846.5,846.5,https://ai.meta.com/llama/,minimal
+Llama2-70B,11.3,193.7,14.6,26.5,912.7,912.7,https://ai.meta.com/llama/,minimal
+Llama2-13B,10.6,199.0,7.7,23.4,841.5,841.5,https://ai.meta.com/llama/,minimal
