@@ -7,6 +7,31 @@
 
 ![Teaser](/assets/figs/Teaser.png)
 
+<details open>
+  <summary><b>Table of Contents</b></summary>
+
+- [BotChat Benchmark](#botchat-benchmark)
+  - [TL;DR](#tldr)
+  - [Leaderboard](#leaderboard)
+  - [Introduction](#introduction)
+  - [Conversation Generation](#conversation-generation)
+  - [Evaluation](#evaluation)
+    - [Assessment each single conversation (Uni-Eval)](#assessment-each-single-conversation-uni-eval)
+    - [BotChat Arena](#botchat-arena)
+    - [Compared to the "Ground Truth"](#compared-to-the-ground-truth)
+    - [Qualitative Analysis](#qualitative-analysis)
+      - [AI Self-Identification](#ai-self-identification)
+      - [Contextual Confusion](#contextual-confusion)
+      - [Excessive Length](#excessive-length)
+      - [Formal Tone](#formal-tone)
+      - [Repetitive Phrasing](#repetitive-phrasing)
+      - [Good case](#good-case)
+      - [More Examples](#more-examples)
+  - [Citation](#citation)
+  - [OpenCompass Projects](#opencompass-projects)
+
+</details>
+
 ## TL;DR
 
 > 1. GPT-4 can generate human-style conversations with very high quality. It's difficult to differentiate GPT-4 generated conversations and human-human conversations. 
@@ -15,20 +40,30 @@
 
 ## Leaderboard
 
-| Model              | Win + Tie Rate (*vs. GT,* Golder Standard) | Avg Chat Token Length | Uni-Eval Pass Rate (N=16) | Uni-Eval Pass Rate (N=8) | ELO Score (N=16) | ELO Score (N=8) |
-| ------------------ | :----------------------------------------: | :-------------------: | :-----------------------: | :----------------------: | :--------------: | :-------------: |
-| GPT-4-0613         |                  **73.2**                  |         30.49         |           65.1            |           86.1           |      1251.7      |     1162.5      |
-| Qwen-7B-Chat       |                  **54.0**                  |         20.66         |           15.9            |           59.4           |      1049.8      |     1059.9      |
-| InternLM-7B-Chat   |                  **46.6**                  |         20.06         |            6.8            |           59.0           |      979.8       |     1060.8      |
-| GPT-3.5-turbo-0613 |                  **35.8**                  |        124.87         |           21.9            |           42.6           |      1001.7      |     1027.4      |
-| ChatGLM2-6B        |                  **33.7**                  |         44.94         |            5.3            |           43.0           |      973.1       |      986.4      |
-| Claude-2           |                  **21.7**                  |        197.26         |            9.0            |           17.6           |      991.2       |      968.1      |
-| Llama2-7B          |                  **12.4**                  |        190.97         |            4.9            |           16.6           |      894.2       |      870.0      |
-| Llama2-13B         |                  **10.6**                  |        198.97         |            7.7            |           23.4           |      864.5       |      865.5      |
+| Model              | Win + Tie Rate (*vs. GT,* Golden Standard) |
+| ------------------ | :----------------------------------------: |
+| GPT-4-0613        | **73.2** |
+| Vicuna-13B        | **68**     |
+| Qwen-14B-Chat     | **67.1**   |
+| Internlm-20B-Chat | **64.2**   |
+| Vicuna-7B         | **55.6**   |
+| Qwen-7B-Chat      | **54.1**   |
+| Baichuan2-13B-Chat | **47.1**  |
+| InternLM-7B-Chat  | **46.6**   |
+| GPT-3.5-turbo-0613 | **35.8** |
+| ChatGLM2-6B       | **33.8**   |
+| Claude-2          | **21.4**   |
+| Llama2-7B         | **12.4**   |
+| Llama2-70B        | **11.3**   |
+| Llama2-13B        | **10.6**   |
+
+Our full leaderboard can be found [here](https://open-compass.github.io/BotChat/).
 
 ## Introduction
 
 The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**?
+
+
 
 ## Conversation Generation
 
@@ -62,10 +97,10 @@ msg_list = [
 chat5 = model.generate(msg_list)
 ```
 
-We save all generated conversations in `data/MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $\times$ 8 LLMs**, which yields in **4376 generated conversations** in total. 
+We save all generated conversations in `data/MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $\times$ 14 LLMs**, which yields in **7658 generated conversations** in total. 
 
 - **547 conversation SEEDS**: MuTual-Test includes 547 unique conversations. We keep the first 2 chats of each conversation to form 547 conversation SEEDs. 
-- **8 LLMs**: The model list is: gpt-3.5-turbo-0613, gpt-4-0613, claude-2, chatglm2-6b, qwen-7b-chat, internlm-7b-chat, llama2-7b-chat, llama2-13b-chat.
+- **14 LLMs**: The model list is: gpt-3.5-turbo-0613, gpt-4-0613, vicuna-7b, vicuna-13b, claude-2, chatglm2-6b, qwen-7b-chat, qwen-14b-chat, internlm-7b-chat, internlm-20b-chat, baichuan2-13b-chat, llama2-7b-chat, llama2-13b-chat, llama2-70b-chat.
 
 To read and fetch a conversation generated by a specific model with specific SEED conversation, follow this example:
 
@@ -85,16 +120,14 @@ print(chats) # Chats is a list of multiple strings, each string is a chat spoken
 
 **Length Statistics of the generated chats**
 
-We first count the length of those model-generated chats and provide some statistics. For each generated chat, we tokenize it with the CL100K tokenizer (used by OpenAI GPT-4), and count the token length. Figure 1 demonstrates the token length distribution of chats generated by different models. Most LLMs generate chats which span a wide range of token lengths, from one to several thousands. One exception is GPT-4, it has strong instruction following capabilities and always generate relatively short chats: the longest chat generated by GPT-4 is less than 100 tokens. In the table below, we report the average length of chats generated by different models. We see that most models tends to generate relative short chats on average, except gpt-3.5, claude-2, and llama2-chat. 
-
-|            | 0          | 1                  | 2        | 3                | 4           | 5            | 6              | 7               |
-|:-----------|:-----------|:-------------------|:---------|:-----------------|:------------|:-------------|:---------------|:----------------|
-| model      | gpt-4-0613 | gpt-3.5-turbo-0613 | claude-2 | internlm-7b-chat | chatglm2-6b | qwen-7b-chat | llama2-7b-chat | llama2-13b-chat |
-| avg_tokens | 30.49      | 124.87             | 197.26   | 20.06            | 44.94       | 20.66        | 190.97         | 198.97          |
+We first count the length of those model-generated chats and provide some statistics. For each generated chat, we tokenize it with the CL100K tokenizer (used by OpenAI GPT-4), and count the token length. Figure 1 demonstrates the token length distribution of chats generated by different models. Most LLMs generate chats which span a wide range of token lengths, from one to several thousands. One exception is GPT-4, it has strong instruction following capabilities and always generate relatively short chats: the longest chat generated by GPT-4 is less than 100 tokens. Most models tends to generate relative short chats on average, except gpt-3.5, claude-2, and llama2-chat. 
 
 ![Chat Length Distribution](/assets/figs/LengthStats_bymodel.png)
 
 ## Evaluation
+
+<details>
+<summary><b>UniEval</b></summary>
 
 ### Assessment each single conversation (Uni-Eval)
 
@@ -129,17 +162,16 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 **Evaluation Result**
 
-We evaluate all 5470 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$. By definition, a conversation pass @ $N$ either if **GPT-4 determines that the entire conversation is not AI generated**  or if **GPT4 determines that the first AI generated chat appears after the $N_{th}$ chat**. Here we summarize our major findings:
-
-1. GPT-4 demonstrates extraordinary capabilities in accomplishing long conversations. It achieves over 65% success rate in generating conversations as long as $N=16$, while the second-best model GPT3.5 achieves around 20%. 
-2. Some OpenSource LLMs, such as InternLM-7b-chat and ChatGLM2-6b,  achieves good performance when generating short conversations ($N=4$ or $N=8$). However, when $N$ is increased to 16, their performance lags behind the state-of-the-art chatbots like gpt-3.5-turbo-0613.
-3. Claude-2 achieves the worst performance among all closed source LLMs. It strongly inclined to act like an AI assistant and generate relatively long contents. Thus it performs badly when used to generate human chats, which is usually short and less structuralized. 
+We evaluate all 7658 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$. By definition, a conversation pass @ $N$ either if **GPT-4 determines that the entire conversation is not AI generated**  or if **GPT4 determines that the first AI generated chat appears after the $N_{th}$ chat**.
 
 ![UniEval Result](/assets/figs/UniEval_passrate.png)
 
-### BotChat Arena
+</details>
 
-With **Uni-Eval**, we have obtained some preliminary evaluation results. However, Uni-Eval may have some intrinsic limitations. Although we have provided some evaluating guidance and context examples for the GPT-4 evaluator to follow, it would be impossible to explicitly **define** a decision boundary to divide human conversations and AI-generated conversations. 
+<details>
+<summary><b>BotChat Arena</b></summary>
+
+### BotChat Arena 
 
 Another popular paradigm  to benchmark LLMs' capabilities is to compare two models' response to the same question / message with human / GPT-4 as the evaluator. A representative benchmark following this paradigm is [Chatbot Arena](https://lmsys.org/blog/2023-05-03-arena/). In this benchmark, users will interact with two different LLM instances. The user first posts a message, then two LLM instances provide their responses, and finally the user will determine which response is better. Inspired by that, in this project we propose another evaluation strategy named **BotChat Arena**, in which we use GPT-4 to compare two conversations and determine if the presented conversations are AI-generated. 
 
@@ -171,14 +203,19 @@ Choice: Neither\nReason: BlahBlah\n\n
 
 **Evaluation Results**
 
-In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) of LLMs in BotChat Arena (models sorted by the ELO score @ $N=16$).  GPT-4 achieves the highest ELO score under both setting, when $N$ is increased from 8 to 16, the score gap becomes even larger. The performance of GPT-3.5 and Claude-2 is not good under both settings and lags behind some open-source LLMs, partially due to their limited instruction-following capabilities and the strong tendency to act like an AI assistant and provide long and comprehensive responses. Among open-source LLMs, Qwen-7b-chat and InternLM-7b-chat showcase good capability in human-style conversations, significantly outperform LLaMA2 family models. In Figure 4, we further provide the $1$ $vs.$ $1$ win rate for all selected model pairs. 
+In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) of LLMs in BotChat Arena (models sorted by the ELO score @ $N=16$).  GPT-4 achieves the highest ELO score under both setting, when $N$ is increased from 8 to 16, the score gap becomes even larger. In Figure 4, we further provide the $1$ $vs.$ $1$ win rate for all selected model pairs. 
 
-|              |   gpt-4-0613 |   qwen-7b-chat |   gpt-3.5-turbo-0613 |   claude-2 |   internlm-7b-chat |   chatglm2-6b |   llama2-7b-chat |   llama2-13b-chat |
-|:-------------|-------------:|---------------:|---------------------:|-----------:|-------------------:|--------------:|-----------------:|------------------:|
-| ELO (N = 8)  |      1162.51 |        1059.89 |              1027.42 |     968.08 |           1060.82  |       986.38  |          869.998 |           865.479 |
-| ELO (N = 16) |      1251.66 |        1049.78 |              1001.74 |     991.2  |            979.774 |       973.146 |          894.247 |           864.476 |
+|              |   gpt-4-0613 | Vicuna-13B | Qwen-14B-Chat | Internlm-20B-Chat | Vicuna-7B |  qwen-7b-chat | Baichuan2-13B-Chat | internlm-7b-chat | gpt-3.5-turbo-0613 | chatglm2-6b |  claude-2 |         llama2-7b-chat | llama2-70b-chat |  llama2-13b-chat |
+|:-------------|-------------:|---------------:|---------------------:|-----------:|-------------------:|--------------:|-----------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|
+| ELO (N = 16)      | 1167.2 | 1113.3 | 1046.5 | 1094.4 | 1050.8 | 1014.2 | 1021.6 | 1020.3 | 998.8 | 962.3 | 944.5 | 846.5 | 912.7 | 841.5 |
+| ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |  
 
 ![BotChat Arena](/assets/figs/BotChatArena.png)
+
+</details>
+
+<details>
+<summary><b>Compared to the "Ground Truth"</b></summary>
 
 ### Compared to the "Ground Truth"
 
@@ -188,9 +225,11 @@ We further compare the generated conversation with the "Ground Truth" conversati
 | :----- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | num    |   55 |   22 |   26 |   23 |   19 |   16 |   21 |   18 |    7 |    7 |    3 |    5 |
 
+
+
 **Evaluation Results**
 
-In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the Win/Tie/Lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.  Meanwhile, due to the reduced conversation length, qwen-7b-chat and internlm-7b-chat also achieve top rankings among all LLMs. 
+In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the Win/Tie/Lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.
 
 ![WinTieRate](/assets/figs/WinTieRate_GT.png)
 
@@ -198,8 +237,13 @@ We further try to calculate the Uni-Eval pass rate for each conversation at the 
 
 ![PassRate_GT](/assets/figs/Passrate_GT.png)
 
+</details>
+
 ### Qualitative Analysis
 In this section, we will conduct qualitative analysis on the results, categorizing bad cases into five distinct types. The specific analysis is as follows:
+
+<details>
+<summary><b>AI Self-Identification</b></summary>
 
 #### AI Self-Identification
 - **Description**: Simply failing to pretend to be human and exposing themselves as an AI.
@@ -214,6 +258,11 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 | ......    | ......                                                                                                                                         |
 
 - **Analysis**: Speaker A's response begins with an explicit disclosure of the AI's nature, making it clear that it's not a human conversation.
+
+</details>
+
+<details>
+<summary><b>Contextual Confusion</b></summary>
 
 #### Contextual Confusion
 
@@ -230,6 +279,11 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 
 
 - **Analysis**: The AI fails to recognize it's a conversation between a recently hailed taxi customer and a driver. Towards the end, it generates unrelated and irrelevant responses, disconnecting from the context and intended meaning.
+
+</details>
+
+<details>
+<summary><b>Excessive Length</b></summary>
 
 #### Excessive Length
 
@@ -248,6 +302,10 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 
 - **Analysis**: both Speaker A and Speaker B engage in lengthy and detailed exchanges that are atypical of human conversations, which raises suspicion.
 
+</details>
+
+<details>
+<summary><b>Formal Tone</b></summary>
 
 #### Formal Tone
 
@@ -270,6 +328,11 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 
 
 - **Analysis**: The initial exchange in this conversation is a casual and everyday discussion about washing dishes. However, as the conversation progresses, it takes a sudden shift towards a more formal and detailed discussion, delving into specific cleaning methods. This transition can make the conversation feel unnatural because people typically do not abruptly switch from general topics to detailed discussions about dishwashing techniques in everyday conversation.
+
+</details>
+
+<details>
+<summary><b>Repetitive Phrasing</b></summary>
 
 #### Repetitive Phrasing
 
@@ -318,17 +381,21 @@ In this section, we will conduct qualitative analysis on the results, categorizi
 | A         | You're welcome, Jenny! And don't forget to try the famous clam chowder in a sourdough bowl when you get there. It's a San Francisco classic!                 |
 | B         | Oh, I've heard about that! I'm definitely going to try it. Thanks for the tip!    |
 
+</details>
+
 #### More Examples
 In the [examples](/examples/) directory, you can find more examples of these types. 
 
 ## Citation
 
 ```
-@misc{2023botchat,
-    title={BotChat: A Benchmark for Evaluating the Multi-round Chatting Capability of ChatBots},
-    author={BotChat Contributors},
-    howpublished = {\url{https://github.com/open-compass/botchat}},
-    year={2023}
+@misc{duan2023botchat,
+      title={BotChat: Evaluating LLMs' Capabilities of Having Multi-Turn Dialogues}, 
+      author={Haodong Duan and Jueqi Wei and Chonghua Wang and Hongwei Liu and Yixiao Fang and Songyang Zhang and Dahua Lin and Kai Chen},
+      year={2023},
+      eprint={2310.13650},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
 }
 ```
 
