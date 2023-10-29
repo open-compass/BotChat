@@ -165,7 +165,7 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 We evaluate all 7658 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$. By definition, a conversation pass @ $N$ either if **GPT-4 determines that the entire conversation is not AI generated**  or if **GPT4 determines that the first AI generated chat appears after the $N_{th}$ chat**.
 
-![UniEval Result](/assets/figs/UniEval_passrate.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/UniEval_passrate.png">
 
 </details>
 
@@ -207,8 +207,7 @@ In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) 
 | ELO (N = 16)      | 1167.2 | 1113.3 | 1046.5 | 1094.4 | 1050.8 | 1014.2 | 1021.6 | 1020.3 | 998.8 | 962.3 | 944.5 | 846.5 | 912.7 | 841.5 |
 | ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |  
 
-<img src="/assets/figs/BotChatArena.png">
-<!-- ![BotChat Arena](/assets/figs/BotChatArena.png) -->
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/BotChatArena.png">
 
 </details>
 
@@ -229,11 +228,11 @@ We further compare the generated conversation with the "Ground Truth" conversati
 
 In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the Win/Tie/Lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.
 
-![WinTieRate](/assets/figs/WinTieRate_GT.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/WinTieRate_GT.png">
 
 We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, Qwen-7b-chat, InternLM-7B, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
 
-![PassRate_GT](/assets/figs/Passrate_GT.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/PassRate_GT.png">
 
 </details>
 
