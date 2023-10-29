@@ -64,6 +64,8 @@ Clone this repo and run `pip install -e .` to install BotChat. You need to insta
 
 Heavy dependencies are not included in BotChat requirements. Thus if you need to generate new dialogues with a huggingface model, make sure you have already run its official demo before executing the dialogue generation script. 
 
+We provide the generated conversations and some evaluation results in `data` and `annotations`, respectively. Follow the instruction in the corresponding README file to download, browser, and analyze the data.
+
 ## Conversation Generation
 
 > We define **chat** as the words spoken by **one participant in a specific round** of the conversation. 
