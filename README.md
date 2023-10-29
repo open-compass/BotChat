@@ -21,13 +21,6 @@
     - [BotChat Arena](#botchat-arena)
     - [Compared to the "Ground Truth"](#compared-to-the-ground-truth)
     - [Qualitative Analysis](#qualitative-analysis)
-      - [AI Self-Identification](#ai-self-identification)
-      - [Contextual Confusion](#contextual-confusion)
-      - [Excessive Length](#excessive-length)
-      - [Formal Tone](#formal-tone)
-      - [Repetitive Phrasing](#repetitive-phrasing)
-      - [Good case](#good-case)
-      - [More Examples](#more-examples)
   - [Citation](#citation)
   - [OpenCompass Projects](#opencompass-projects)
 
@@ -165,7 +158,7 @@ Choice: Yes\nIndex: n\nReason: BlahBlah\n
 
 We evaluate all 7658 generated conversations with the above-mentioned strategy and present the evaluation result in this section. In Figure 2, we demonstrate the success rate ("Not AI participated" determined by GPT-4) under different $N$, with models sorted by the descending order of the success rate @ $N=16$. By definition, a conversation pass @ $N$ either if **GPT-4 determines that the entire conversation is not AI generated**  or if **GPT4 determines that the first AI generated chat appears after the $N_{th}$ chat**.
 
-![UniEval Result](/assets/figs/UniEval_passrate.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/UniEval_passrate.png">
 
 </details>
 
@@ -178,11 +171,7 @@ Another popular paradigm  to benchmark LLMs' capabilities is to compare two mode
 
 **Evaluation Setting and Prompt** 
 
-In BotChat Arena, we select conversations from MuTual-Test which have **at least 4 chats, resulting in 222 conversation SEEDs**. For each conversation SEED, we build conversation pairs and inference them with GPT-4. To save the evaluation cost, we skip conversation pairs which include two models with significant performance gaps. For each conversation pair, we conduct bi-directional comparisons and include both results when calculating the evaluation metrics, which can lead to a more robust conclusion. In Figure 3, we visualize the selected model pairs  (denoted by colors). 
-
-![Selected Model Pairs](/assets/figs/SelectedPairs.png)
-
-For a conversation pair, we conduct the comparison with the following meta prompt. We append two conversations after the meta prompt and feed the prompt to GPT-4 to get the evaluation result. In BotChat Arena, we consider two settings: $N=8$ and $N=16$. 
+In BotChat Arena, we select conversations from MuTual-Test which have **at least 4 chats, resulting in 222 conversation SEEDs**. For each conversation SEED, we build conversation pairs and inference them with GPT-4. For a conversation pair, we conduct the comparison with the following meta prompt. We append two conversations after the meta prompt and feed the prompt to GPT-4 to get the evaluation result. In BotChat Arena, we consider two settings: $N=8$ and $N=16$. 
 
 ```python
 arena_prompt = """
@@ -209,9 +198,9 @@ In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) 
 |              |   gpt-4-0613 | Vicuna-13B | Qwen-14B-Chat | Internlm-20B-Chat | Vicuna-7B |  qwen-7b-chat | Baichuan2-13B-Chat | internlm-7b-chat | gpt-3.5-turbo-0613 | chatglm2-6b |  claude-2 |         llama2-7b-chat | llama2-70b-chat |  llama2-13b-chat |
 |:-------------|-------------:|---------------:|---------------------:|-----------:|-------------------:|--------------:|-----------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|
 | ELO (N = 16)      | 1167.2 | 1113.3 | 1046.5 | 1094.4 | 1050.8 | 1014.2 | 1021.6 | 1020.3 | 998.8 | 962.3 | 944.5 | 846.5 | 912.7 | 841.5 |
-| ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |  
+| ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |
 
-![BotChat Arena](/assets/figs/BotChatArena.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/BotChatArena.png">
 
 </details>
 
@@ -232,11 +221,11 @@ We further compare the generated conversation with the "Ground Truth" conversati
 
 In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT conversation is more likely to be AI generated compared to the LLM-generated one. In Figure 5, we demonstrate the Win/Tie/Lose rate of different LLMs (sorted in the descending order of Win + Tie Rate). GPT-4 demonstrates great capabilities in chat generation. With the same chat rounds, the evaluator can hardly tell the difference between GPT-4 generated conversations and GT conversations.
 
-![WinTieRate](/assets/figs/WinTieRate_GT.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/WinTieRate_GT.png">
 
 We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, Qwen-7b-chat, InternLM-7B, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
 
-![PassRate_GT](/assets/figs/Passrate_GT.png)
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/Passrate_GT.png">
 
 </details>
 
