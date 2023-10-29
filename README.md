@@ -21,13 +21,6 @@
     - [BotChat Arena](#botchat-arena)
     - [Compared to the "Ground Truth"](#compared-to-the-ground-truth)
     - [Qualitative Analysis](#qualitative-analysis)
-      - [AI Self-Identification](#ai-self-identification)
-      - [Contextual Confusion](#contextual-confusion)
-      - [Excessive Length](#excessive-length)
-      - [Formal Tone](#formal-tone)
-      - [Repetitive Phrasing](#repetitive-phrasing)
-      - [Good case](#good-case)
-      - [More Examples](#more-examples)
   - [Citation](#citation)
   - [OpenCompass Projects](#opencompass-projects)
 
@@ -205,7 +198,7 @@ In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) 
 |              |   gpt-4-0613 | Vicuna-13B | Qwen-14B-Chat | Internlm-20B-Chat | Vicuna-7B |  qwen-7b-chat | Baichuan2-13B-Chat | internlm-7b-chat | gpt-3.5-turbo-0613 | chatglm2-6b |  claude-2 |         llama2-7b-chat | llama2-70b-chat |  llama2-13b-chat |
 |:-------------|-------------:|---------------:|---------------------:|-----------:|-------------------:|--------------:|-----------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|------------------:|
 | ELO (N = 16)      | 1167.2 | 1113.3 | 1046.5 | 1094.4 | 1050.8 | 1014.2 | 1021.6 | 1020.3 | 998.8 | 962.3 | 944.5 | 846.5 | 912.7 | 841.5 |
-| ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |  
+| ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |
 
 <img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/BotChatArena.png">
 
