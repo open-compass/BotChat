@@ -178,11 +178,7 @@ Another popular paradigm  to benchmark LLMs' capabilities is to compare two mode
 
 **Evaluation Setting and Prompt** 
 
-In BotChat Arena, we select conversations from MuTual-Test which have **at least 4 chats, resulting in 222 conversation SEEDs**. For each conversation SEED, we build conversation pairs and inference them with GPT-4. To save the evaluation cost, we skip conversation pairs which include two models with significant performance gaps. For each conversation pair, we conduct bi-directional comparisons and include both results when calculating the evaluation metrics, which can lead to a more robust conclusion. In Figure 3, we visualize the selected model pairs  (denoted by colors). 
-
-![Selected Model Pairs](/assets/figs/SelectedPairs.png)
-
-For a conversation pair, we conduct the comparison with the following meta prompt. We append two conversations after the meta prompt and feed the prompt to GPT-4 to get the evaluation result. In BotChat Arena, we consider two settings: $N=8$ and $N=16$. 
+In BotChat Arena, we select conversations from MuTual-Test which have **at least 4 chats, resulting in 222 conversation SEEDs**. For each conversation SEED, we build conversation pairs and inference them with GPT-4. For a conversation pair, we conduct the comparison with the following meta prompt. We append two conversations after the meta prompt and feed the prompt to GPT-4 to get the evaluation result. In BotChat Arena, we consider two settings: $N=8$ and $N=16$. 
 
 ```python
 arena_prompt = """
@@ -211,7 +207,8 @@ In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) 
 | ELO (N = 16)      | 1167.2 | 1113.3 | 1046.5 | 1094.4 | 1050.8 | 1014.2 | 1021.6 | 1020.3 | 998.8 | 962.3 | 944.5 | 846.5 | 912.7 | 841.5 |
 | ELO (N = 8)      |1103.9  | 1096.5 | 1085.2  | 1092.8  | 1048.3 | 1024.7  | 1023.4  | 1020.3 | 998.8  | 962.3  | 944.5  | 846.5  | 912.7  | 841.5  |  
 
-![BotChat Arena](/assets/figs/BotChatArena.png)
+<img src="/assets/figs/BotChatArena.png">
+<!-- ![BotChat Arena](/assets/figs/BotChatArena.png) -->
 
 </details>
 
