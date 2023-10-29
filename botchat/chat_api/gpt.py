@@ -15,8 +15,7 @@ class OpenAIWrapper:
                  verbose: bool = False, 
                  system_prompt: str = None,
                  temperature: float = 0,
-                 key: str = None,
-                ):
+                 key: str = None):
 
         self.model = model
         self.system_prompt = system_prompt
