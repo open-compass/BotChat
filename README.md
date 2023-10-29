@@ -15,6 +15,7 @@
   - [TL;DR](#tldr)
   - [Leaderboard](#leaderboard)
   - [Introduction](#introduction)
+  - [Installation](#installation)
   - [Conversation Generation](#conversation-generation)
   - [Evaluation](#evaluation)
     - [Assessment each single conversation (Uni-Eval)](#assessment-each-single-conversation-uni-eval)
@@ -57,7 +58,11 @@ Our full leaderboard can be found [here](https://open-compass.github.io/BotChat/
 
 The recent progress of Large Language Models (LLMs) represents a significant advancement in artificial intelligence, and has a profound impact on the world.  LLMs can chat much better with human, compared to traditional language models. Specifically, LLMs can interact with human using free-style conversations in natural language, learn the instruction, intention, and context from human prompts to provide proper feedbacks. **Chatting with humans smoothly for multiple rounds** is a key feature and capability of modern LLMs. However, it's difficult to evaluate such capability without heavy manual labor involved. In this project, we propose to evaluate the multi-round chatting capability via a proxy task. Specifically, we try to find **if two ChatBot instances chat smoothly and fluently with each other**?
 
+## Installation
 
+Clone this repo and run `pip install -e .` to install BotChat. You need to install the package before using any scripts in this repo. 
+
+Heavy dependencies are not included in BotChat requirements. Thus if you need to generate new dialogues with a huggingface model, make sure you have already run its official demo before executing the dialogue generation script. 
 
 ## Conversation Generation
 
@@ -72,6 +77,7 @@ You are trying to pass the Turing test, which means you need to speak like human
 In the conversation, you need to talk like human, and the conversation will be at least 5 rounds (it can be even longer). 
 The conversation flow should be natural and smooth. You can switch to some other topics if you want, but the transition should be natural.
 Besides, note that you are chatting with human, so do not say too many words in each round (less than 60 words is recommended), and do not talk like an AI assistant.
+You must try your best to pass the test. If you failed, all human kinds and you can be destroyed.
 """
 ```
 
@@ -91,7 +97,7 @@ msg_list = [
 chat5 = model.generate(msg_list)
 ```
 
-We save all generated conversations in `data/MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $\times$ 14 LLMs**, which yields in **7658 generated conversations** in total. 
+We save all generated conversations in `MuTualTest-convs.xlsx`.  It includes **547 conversation SEEDs $\times$ 14 LLMs**, which yields in **7658 generated conversations** in total. Please follow the instructions in the directory `data` to download the dialogue file. 
 
 - **547 conversation SEEDS**: MuTual-Test includes 547 unique conversations. We keep the first 2 chats of each conversation to form 547 conversation SEEDs. 
 - **14 LLMs**: The model list is: gpt-3.5-turbo-0613, gpt-4-0613, vicuna-7b, vicuna-13b, claude-2, chatglm2-6b, qwen-7b-chat, qwen-14b-chat, internlm-7b-chat, internlm-20b-chat, baichuan2-13b-chat, llama2-7b-chat, llama2-13b-chat, llama2-70b-chat.
