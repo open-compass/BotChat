@@ -232,7 +232,7 @@ In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT co
 
 We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, Qwen-7b-chat, InternLM-7B, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
 
-<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/PassRate_GT.png">
+<img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/Passrate_GT.png">
 
 </details>
 
