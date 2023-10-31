@@ -22,13 +22,6 @@
     - [BotChat Arena](#botchat-arena)
     - [Compared to the "Ground Truth"](#compared-to-the-ground-truth)
     - [Qualitative Analysis](#qualitative-analysis)
-      - [AI Self-Identification](#ai-self-identification)
-      - [Contextual Confusion](#contextual-confusion)
-      - [Excessive Length](#excessive-length)
-      - [Formal Tone](#formal-tone)
-      - [Repetitive Phrasing](#repetitive-phrasing)
-      - [Good case](#good-case)
-      - [More Examples](#more-examples)
   - [Citation](#citation)
   - [OpenCompass Projects](#opencompass-projects)
 
@@ -222,11 +215,6 @@ In the table below, we demonstrate the ELO score (`init=1000, scale=400, K=32`) 
 <details>
 <summary><b>Compared to the "Ground Truth"</b></summary>
 
-</details>
-
-<details>
-<summary><b>Compared to the "Ground Truth"</b></summary>
-
 ### Compared to the "Ground Truth"
 
 We further compare the generated conversation with the "Ground Truth" conversations in **MuTual-Test**. We follow the same protocol as BotChat Arena and select a subset with 222 conversations (with at least 4 chats) for this comparison. We list the specific #round distribution of the conversations in the table below. Since the Ground Truth conversations may have various lengths (ranging from 4 to 15), to deliver a fair comparison, we trim all generated conversations to the same length as the reference ground-truth conversation. The meta prompt adopted is basically the same as the one used in BotChat Arena. One difference is that in this time we state that only one of two conversations includes AI-generated utterances.
@@ -246,8 +234,6 @@ In each LLM vs. GT comparison, an LLM wins if the evaluator determines the GT co
 We further try to calculate the Uni-Eval pass rate for each conversation at the GT trimmed length to see if the same conclusion can be drawn with different evaluation strategy. The result is visualized in Figure 6. In these two figures, the rank of top-performing models (GPT-4, Qwen-7b-chat, InternLM-7B, etc.) are exactly the same. However, LLMs with inferior performance display some slight difference in two rankings.
 
 <img src="https://github.com/open-compass/BotChat/blob/main/assets/figs/Passrate_GT.png">
-
-</details>
 
 </details>
 
