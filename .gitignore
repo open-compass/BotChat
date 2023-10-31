@@ -159,10 +159,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-*ipynb
 *ipynb_checkpoints
 data/.ipynb_checkpoints
 *pkl
 tmp.png
 n8*xlsx
 n16*xlsx
+data/*tsv
+annotations/*tsv
