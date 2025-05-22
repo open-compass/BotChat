@@ -387,13 +387,12 @@ In the [examples](/examples/) directory, you can find more examples of these typ
 ## Citation
 
 ```
-@misc{duan2023botchat,
-      title={BotChat: Evaluating LLMs' Capabilities of Having Multi-Turn Dialogues}, 
-      author={Haodong Duan and Jueqi Wei and Chonghua Wang and Hongwei Liu and Yixiao Fang and Songyang Zhang and Dahua Lin and Kai Chen},
-      year={2023},
-      eprint={2310.13650},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{duan2024botchat,
+  title={BotChat: Evaluating LLMs’ Capabilities of Having Multi-Turn Dialogues},
+  author={Duan, Haodong and Wei, Jueqi and Wang, Chonghua and Liu, Hongwei and Fang, Yixiao and Zhang, Songyang and Lin, Dahua and Chen, Kai},
+  booktitle={Findings of the Association for Computational Linguistics: NAACL 2024},
+  pages={3184--3200},
+  year={2024}
 }
 ```
 
